@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import Layout from './../../components/Layout/Layout';
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
-import toast  from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom';
+import toast  from 'react-hot-toast';
+import "../../styles/AuthStyles.css";
+
+
 
 const Register = () => {
 
@@ -11,13 +14,15 @@ const Register = () => {
   const [password,SetPassword] = useState("");
   const [phone,SetPhone] = useState("");
   const [address,SetAddress] = useState("");
+  const [answer,SetAnswer] = useState("");
+
   const navigate = useNavigate();
 
   //form function
    const handleSubmit = async (e) => {
     e.preventDefault()
     try{
-        const res = await axios.post('/api/v1/auth/register', {name,email,password,phone,address});
+        const res = await axios.post('/api/v1/auth/register', {name,email,password,phone,address,answer});
         if( res && res.data.success){
           toast.success(res.data && res.data.message)
           navigate('/login');
@@ -51,6 +56,9 @@ const Register = () => {
   </div>
   <div className="mb-3">
     <input type="text" value={address}  onChange={(e) => SetAddress(e.target.value)} className="form-control" id="exampleInputEmail1" placeholder="Enter Your Address"  required/>
+  </div>
+  <div className="mb-3">
+    <input type="text" value={answer}  onChange={(e) => SetAnswer(e.target.value)} className="form-control" id="exampleInputEmail1" placeholder="What is your favorite sport?"  required/>
   </div>
   <button type="submit" className="btn btn-primary">Submit</button>
 </form>
